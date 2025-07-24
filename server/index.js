@@ -11,7 +11,7 @@ app.use(bodyParser.json());
 
 dotenv.config();
 app.use(cors({
-  origin: "http://localhost:5173", // Adjust this to your client URL
+  origin: `${process.env.frontend}`, // Adjust this to your client URL
   credentials: true
 }));
 app.use(session({
