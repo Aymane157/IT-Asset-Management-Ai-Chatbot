@@ -1,0 +1,11 @@
+streamlit
+pymongo
+python-dotenv
+langchain-openai
+pandas
+plotly
+fastapi
+uvicorn
+python-dotenv
+pymongo
+requests

@@ -1,5 +1,6 @@
 import Demande from "../model/Demande.js";
 import Materiel from "../model/Materiel.js";
+import User from "../model/User.js";
 
 export const createDemande = async (req, res) => {
   try {
@@ -78,17 +79,56 @@ export const updateDemandeStatus = async (req, res) => {
   const { status } = req.body;
 
   try {
+    // 1. Update the demande status
     const updatedDemande = await Demande.findByIdAndUpdate(
       id,
       { status },
       { new: true }
     );
+
+    if (!updatedDemande) {
+      return res.status(404).json({ error: "Demande not found" });
+    }
+
+    // 2. If status is "Acceptée", assign materiel to user
+    if (status === "Acceptée") {
+      const { designation, description, user } = updatedDemande;
+      const assignedUser = await User.findById(user);
+
+      if (!assignedUser) {
+        console.warn("Utilisateur non trouvé pour l'affectation");
+      } else {
+        console.log("Updating materiel for demande:", updatedDemande);
+        console.log("User for assignment:", assignedUser.name);
+
+        const matchedMateriel = await Materiel.findOneAndUpdate(
+          {
+            designation,
+            description,
+            personneAffectation: null, // Only assign unassigned matériel
+          },
+          {
+            personneAffectation: assignedUser.name,
+          },
+          { new: true }
+        );
+
+        if (!matchedMateriel) {
+          console.warn("Aucun matériel correspondant trouvé ou déjà affecté");
+        } else {
+          console.log("Matériel affecté :", matchedMateriel.sn);
+        }
+      }
+    }
+
+    // ✅ Always respond
     res.status(200).json(updatedDemande);
   } catch (error) {
     console.error("Failed to update demande:", error);
     res.status(500).json({ error: "Update failed" });
   }
 };
+
 export const getAffect=async (req, res) => {
   try {
     const demandes = await Demande.find({ status: "Acceptée" }).populate("user");

@@ -232,19 +232,20 @@ export default function EditableDesignationTable() {
         <h3 className="text-xl font-semibold mb-4">Ajouter un nouveau matériel</h3>
         <div className="grid md:grid-cols-3 gap-4 mb-4">
           {[
-            { label: "Numéro de Série (SN)", key: "sn" },
-            { label: "Code", key: "code" },
-            { label: "Désignation", key: "designation" },
-            { label: "Description", key: "description" },
-            { label: "Fournisseur", key: "fournisseur" },
-            { label: "Facture", key: "facture" },
-            { label: "Prix HT (MAD)", key: "prixHT", type: "number" },
+            { label: "Numéro de Série (SN)", key: "sn" ,placeholder: "Ex: SN12345"},
+            { label: "Code", key: "code",placeholder: "Ex: ADD/INFO/00017" },
+            { label: "Désignation", key: "designation",placeholder: "Ex: Ordinateur Portable" },
+            { label: "Description", key: "description" ,placeholder: "Ex: Dell XPS 13" },
+            { label: "Fournisseur", key: "fournisseur",placeholder: "Ex: Dell" },
+            { label: "Facture", key: "facture" ,placeholder: "Ex: FACT12345" },
+            { label: "Prix HT (MAD)", key: "prixHT", type: "number",placeholder: "Ex: 10000" },
             { label: "Date de mise en service", key: "dateMiseEnService", type: "date" },
             { label: "Observations", key: "observations" },
-          ].map(({ label, key, type = "text" }) => (
+          ].map(({ label, key, type = "text",placeholder }) => (
             <div key={key}>
               <label className="block mb-1 font-medium">{label}</label>
-              <input
+              <input 
+              placeholder={placeholder}
                 type={type}
                 className="w-full border px-2 py-1 rounded"
                 value={newItem[key] || ""}

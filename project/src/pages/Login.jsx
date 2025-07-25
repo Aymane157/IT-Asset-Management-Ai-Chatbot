@@ -27,7 +27,7 @@ const Login = () => {
       }
     } catch (error) {
       console.error("Login failed:", error.response ? error.response.data : error.message);
-      alert("Login failed. Please check your credentials.");
+      toast.error("Login failed. Please check your credentials.");
     }
   }
 
