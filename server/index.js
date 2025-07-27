@@ -20,9 +20,9 @@ app.use(session({
   saveUninitialized: false,
   cookie: {
     httpOnly: true,
-    secure: false, //change for vscode normal
+    secure: true, //change for vscode normal
     maxAge: 1000 * 60 * 60 * 24, 
-    sameSite: 'lax'
+    sameSite: 'none'
   }
   
 }));
