@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { FaRobot, FaSpinner, FaInfoCircle } from "react-icons/fa";
 import axios from 'axios';
 
-export const Chatbot = () => {
+ const Chatbot = () => {
   const [messages, setMessages] = useState([
     {
       from: 'bot',
@@ -17,8 +17,9 @@ export const Chatbot = () => {
   const chatEndRef = useRef(null);
 
   // Fallback to localhost if env variable is missing
-  const API_BASE_URL =  'http://127.0.0.1:8000';
-
+  const API_BASE_URL =  import.meta.env.VITE_API_BASE_URL;
+  
+  console.log("API_BASE_URL:", API_BASE_URL);
   const suggestedQuestions = [
     "Combien d'équipements sont disponibles en stock ?",
     "Quels sont les équipements affectés à Aymane Eddamane ?",
@@ -285,3 +286,4 @@ export const Chatbot = () => {
     </div>
   );
 };
+export default Chatbot;
